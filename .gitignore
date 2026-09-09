@@ -1,0 +1,10 @@
+node_modules/
+.venv/
+__pycache__/
+.pytest_cache/
+dist/
+beam-backend/data/runtime/
+*.sqlite3*
+*.db
+bootstrap-key.txt
+.env

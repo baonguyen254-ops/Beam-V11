@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "calibrated": true,
+  "source": "OPENSTUDIO_ENERGYPLUS_ANNUAL",
+  "floor_area_m2": 0,
+  "annual_site_energy_kwh": 0,
+  "annual_electricity_kwh": 0,
+  "site_eui_kwh_m2_year": 0,
+  "hourly_electric_kw": [],
+  "metadata": {
+    "weather_file": "",
+    "openstudio_version": "",
+    "energyplus_version": "",
+    "notes": "Populate with real annual simulation results. Do not rename to energy_baseline.json until valid values are available."
+  }
+}

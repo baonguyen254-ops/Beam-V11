@@ -1,0 +1,284 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --beam-page: #f4f7fb;
+  --beam-surface: #ffffff;
+  --beam-surface-2: #f8fafc;
+  --beam-border: #d8e0ea;
+  --beam-text: #0f172a;
+  --beam-muted: #64748b;
+  --beam-map: #f8fafc;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--beam-page);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { min-width: 320px; min-height: 100%; margin: 0; }
+html { background: var(--beam-page); overscroll-behavior-y: none; }
+body { min-height: 100vh; min-height: 100dvh; background: var(--beam-page); color: var(--beam-text); }
+html[data-beam-theme="dark"] { color-scheme: dark; --beam-page:#020617; --beam-surface:#0f172a; --beam-surface-2:#020617; --beam-border:#1e293b; --beam-text:#f1f5f9; --beam-muted:#64748b; --beam-map:#020617; }
+button, input, select, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
+
+.field {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid var(--beam-border);
+  background: var(--beam-surface-2);
+  padding: 0.5rem 0.625rem;
+  color: var(--beam-text);
+  font-size: 0.75rem;
+}
+.field::placeholder { color: #94a3b8; }
+.field:focus { border-color: #06b6d4; outline: none; }
+
+/*
+ * B.E.A.M. v8 map surface
+ * ----------------------
+ * The map owns wheel/pinch/drag gestures while the pointer is over it.  The
+ * document itself must not become the zoom target, otherwise touchpads can
+ * make the page scroll while the floorplan is being navigated.
+ */
+.beam-floorplan-shell {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(8,145,178,.055), transparent 44%),
+    var(--beam-map);
+}
+
+.beam-floorplan-canvas {
+  display: block;
+  width: 100%;
+  height: clamp(380px, 58vh, 800px);
+  min-height: 0;
+  overscroll-behavior: contain;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+.beam-floorplan-canvas:active { cursor: grabbing; }
+
+/* Native Fullscreen API and CSS takeover fallback use the same sizing model. */
+.beam-floorplan-shell:fullscreen,
+.beam-floorplan-fullscreen {
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--beam-map);
+}
+.beam-floorplan-shell:fullscreen .beam-floorplan-canvas,
+.beam-floorplan-fullscreen .beam-floorplan-canvas {
+  width: 100vw;
+  height: 100dvh;
+  max-height: none;
+}
+
+.beam-room-hud {
+  max-height: min(44dvh, 390px);
+  overflow: hidden;
+}
+
+/* Large-screen command center intentionally takes over the viewport without
+ * requiring browser F11. Its floorplan fills the available grid cell. */
+.beam-command-center { contain: layout paint; }
+.beam-command-center .beam-floorplan-shell { height: 100%; min-height: 0; }
+.beam-command-center .beam-floorplan-canvas { height: 100%; min-height: 0; max-height: none; }
+.beam-command-center .beam-room-hud { max-width: min(48%, 620px); }
+
+@media (max-width: 639px) {
+  .beam-floorplan-canvas { height: min(56dvh, 520px); min-height: 350px; }
+  .beam-room-hud { left: .5rem; right: .5rem; bottom: .5rem; max-width: none; max-height: 48dvh; }
+  input[type="range"] { min-height: 36px; }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .beam-floorplan-canvas { height: min(62dvh, 710px); }
+}
+
+@media (min-width: 1600px) {
+  .beam-floorplan-canvas { height: min(64vh, 860px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* v8: when Command Center requests native fullscreen on <body>, keep the app viewport exact. */
+body:fullscreen { width:100vw; height:100dvh; overflow:hidden; background:var(--beam-page); }
+.beam-command-center { min-width:320px; }
+
+
+/* -------------------------------------------------------------------------
+ * B.E.A.M. v8 visual system
+ * Default theme is LIGHT. The explicit data attribute is set by App.tsx and
+ * persisted only after the user chooses another theme.
+ * ---------------------------------------------------------------------- */
+.beam-app { background: var(--beam-page); color: var(--beam-text); }
+.beam-command-center { background: var(--beam-page) !important; color: var(--beam-text) !important; }
+
+/* v8 uses a slightly larger information scale on modern displays. Tiny HMI
+   captions stay compact, but are no longer 8–9 px on desktop. */
+@media (min-width: 768px) {
+  .beam-app [class~="text-[8px]"], .beam-command-center [class~="text-[8px]"] { font-size: .625rem !important; }
+  .beam-app [class~="text-[9px]"], .beam-command-center [class~="text-[9px]"] { font-size: .68rem !important; }
+  .beam-app [class~="text-[10px]"], .beam-command-center [class~="text-[10px]"] { font-size: .75rem !important; }
+  .beam-app [class~="text-[11px]"], .beam-command-center [class~="text-[11px]"] { font-size: .79rem !important; }
+}
+
+/* Light theme compatibility layer for the existing Tailwind HMI vocabulary.
+   Attribute selectors deliberately carry more specificity than utility classes
+   and avoid a risky wholesale rewrite of the mature v8 component tree. */
+html[data-beam-theme="light"] [class~="bg-slate-950"],
+html[data-beam-theme="light"] [class*="bg-slate-950/"] { background-color: #f8fafc !important; }
+html[data-beam-theme="light"] [class~="bg-slate-900"],
+html[data-beam-theme="light"] [class*="bg-slate-900/"] { background-color: #ffffff !important; }
+html[data-beam-theme="light"] [class~="bg-slate-800"],
+html[data-beam-theme="light"] [class*="bg-slate-800/"] { background-color: #edf2f7 !important; }
+html[data-beam-theme="light"] [class~="text-slate-100"] { color: #0f172a !important; }
+html[data-beam-theme="light"] [class~="text-slate-200"] { color: #1e293b !important; }
+html[data-beam-theme="light"] [class~="text-slate-300"] { color: #334155 !important; }
+html[data-beam-theme="light"] [class~="text-slate-400"] { color: #475569 !important; }
+html[data-beam-theme="light"] [class~="text-slate-500"] { color: #64748b !important; }
+html[data-beam-theme="light"] [class~="text-slate-600"] { color: #64748b !important; }
+html[data-beam-theme="light"] [class~="border-slate-800"] { border-color: #d8e0ea !important; }
+html[data-beam-theme="light"] [class~="border-slate-700"],
+html[data-beam-theme="light"] [class*="border-slate-700/"] { border-color: #c5d0dd !important; }
+html[data-beam-theme="light"] [class~="border-slate-600"] { border-color: #a8b7c8 !important; }
+html[data-beam-theme="light"] [class*="shadow-black/"] { --tw-shadow-color: rgba(15,23,42,.08) !important; }
+html[data-beam-theme="light"] .recharts-default-tooltip { background: #ffffff !important; border-color: #cbd5e1 !important; color: #0f172a !important; }
+html[data-beam-theme="light"] .recharts-text { fill: #64748b; }
+
+html[data-beam-theme="dark"] .beam-floorplan-shell,
+html[data-beam-theme="dark"] .beam-floorplan-fullscreen { --beam-map:#020617; }
+html[data-beam-theme="light"] .beam-floorplan-shell,
+html[data-beam-theme="light"] .beam-floorplan-fullscreen { --beam-map:#f8fafc; }
+
+/* Larger v8 overview. The floorplan is intentionally taller because the normal
+   overview now renders names only; details move into the click-through modal. */
+.beam-floorplan-canvas { height: clamp(500px, 66vh, 940px); }
+@media (min-width: 1600px) { .beam-floorplan-canvas { height: min(70vh, 980px); } }
+@media (max-width: 639px) { .beam-floorplan-canvas { height: min(62dvh, 620px); min-height: 390px; } }
+
+
+/* -------------------------------------------------------------------------
+ * B.E.A.M. v8.1 THEME SYSTEM HOTFIX
+ * Light is not an inverted dark palette: surfaces, accents, glows, overlays,
+ * heatmaps and route graphics use separate contrast budgets per theme.
+ * ---------------------------------------------------------------------- */
+:root,
+html[data-beam-theme="light"] {
+  --beam-page:#f3f6fa;
+  --beam-surface:#ffffff;
+  --beam-surface-2:#f7f9fc;
+  --beam-surface-3:#eef3f8;
+  --beam-border:#d6dee8;
+  --beam-border-strong:#b9c6d5;
+  --beam-text:#172033;
+  --beam-muted:#5f6f83;
+  --beam-map:#fbfdff;
+  --beam-accent:#087e9c;
+  --beam-violet:#6d4cc7;
+  --beam-success:#087f5b;
+  --beam-warning:#a85d00;
+  --beam-danger:#b42345;
+  --beam-shadow:0 8px 26px rgba(36,50,71,.08);
+  --beam-modal-overlay:rgba(35,48,66,.30);
+}
+html[data-beam-theme="dark"] {
+  --beam-page:#020617;
+  --beam-surface:#0f172a;
+  --beam-surface-2:#08111f;
+  --beam-surface-3:#111c31;
+  --beam-border:#1e293b;
+  --beam-border-strong:#334155;
+  --beam-text:#f1f5f9;
+  --beam-muted:#7f8da3;
+  --beam-map:#020617;
+  --beam-accent:#22d3ee;
+  --beam-violet:#c084fc;
+  --beam-success:#34d399;
+  --beam-warning:#fbbf24;
+  --beam-danger:#fb7185;
+  --beam-shadow:0 12px 36px rgba(0,0,0,.30);
+  --beam-modal-overlay:rgba(0,0,0,.76);
+}
+
+.beam-app, .beam-command-center { background:var(--beam-page)!important; color:var(--beam-text)!important; }
+.beam-panel, .beam-cc-header { background:var(--beam-surface)!important; border-color:var(--beam-border)!important; box-shadow:var(--beam-shadow); }
+.beam-cc-header { box-shadow:0 1px 0 rgba(100,116,139,.08); }
+.beam-modal-backdrop { background:var(--beam-modal-overlay)!important; }
+.beam-route-label { background:color-mix(in srgb, var(--beam-surface) 94%, transparent); border-color:color-mix(in srgb, var(--beam-violet) 46%, var(--beam-border)); color:var(--beam-violet); }
+
+/* Accent text that was intentionally bright in dark mode needs darker inks on
+   white surfaces. This block is deliberately explicit so Light does not inherit
+   neon dark-mode contrast. */
+html[data-beam-theme="light"] [class~="text-cyan-200"],
+html[data-beam-theme="light"] [class~="text-cyan-300"],
+html[data-beam-theme="light"] [class~="text-cyan-400"] { color:#087e9c!important; }
+html[data-beam-theme="light"] [class~="text-violet-200"],
+html[data-beam-theme="light"] [class~="text-violet-300"],
+html[data-beam-theme="light"] [class~="text-violet-400"] { color:#6d4cc7!important; }
+html[data-beam-theme="light"] [class~="text-emerald-100"],
+html[data-beam-theme="light"] [class~="text-emerald-200"],
+html[data-beam-theme="light"] [class~="text-emerald-300"],
+html[data-beam-theme="light"] [class~="text-emerald-400"] { color:#087f5b!important; }
+html[data-beam-theme="light"] [class~="text-amber-100"],
+html[data-beam-theme="light"] [class~="text-amber-200"],
+html[data-beam-theme="light"] [class~="text-amber-300"],
+html[data-beam-theme="light"] [class~="text-amber-400"] { color:#a85d00!important; }
+html[data-beam-theme="light"] [class~="text-rose-100"],
+html[data-beam-theme="light"] [class~="text-rose-200"],
+html[data-beam-theme="light"] [class~="text-rose-300"],
+html[data-beam-theme="light"] [class~="text-rose-400"] { color:#b42345!important; }
+
+html[data-beam-theme="light"] [class*="bg-rose-950"] { background-color:#fff3f5!important; }
+html[data-beam-theme="light"] [class*="bg-amber-950"] { background-color:#fff8ea!important; }
+html[data-beam-theme="light"] [class*="bg-emerald-950"] { background-color:#eefbf6!important; }
+html[data-beam-theme="light"] [class*="bg-violet-950"] { background-color:#f7f3ff!important; }
+html[data-beam-theme="light"] [class*="bg-cyan-950"] { background-color:#eefbfe!important; }
+
+/* Selected translucent accent states are quiet on light surfaces. */
+html[data-beam-theme="light"] [class*="bg-cyan-500/10"],
+html[data-beam-theme="light"] [class*="bg-cyan-500/15"],
+html[data-beam-theme="light"] [class*="bg-cyan-500/20"] { background-color:rgba(8,126,156,.075)!important; }
+html[data-beam-theme="light"] [class*="bg-violet-500/5"],
+html[data-beam-theme="light"] [class*="bg-violet-500/10"],
+html[data-beam-theme="light"] [class*="bg-violet-500/15"] { background-color:rgba(109,76,199,.07)!important; }
+html[data-beam-theme="light"] [class*="bg-emerald-500/5"],
+html[data-beam-theme="light"] [class*="bg-emerald-500/10"] { background-color:rgba(8,127,91,.065)!important; }
+html[data-beam-theme="light"] [class*="bg-rose-500/10"],
+html[data-beam-theme="light"] [class*="bg-rose-500/15"] { background-color:rgba(180,35,69,.06)!important; }
+html[data-beam-theme="light"] [class*="bg-amber-500/10"] { background-color:rgba(168,93,0,.065)!important; }
+
+/* Light-mode panels/toolbars should not carry black glass treatments. */
+html[data-beam-theme="light"] .beam-floorplan-shell [class*="bg-slate-950/90"],
+html[data-beam-theme="light"] .beam-floorplan-shell [class*="bg-slate-950/80"],
+html[data-beam-theme="light"] .beam-floorplan-shell [class*="bg-slate-950/92"] { background-color:rgba(255,255,255,.94)!important; box-shadow:0 5px 18px rgba(36,50,71,.10)!important; }
+
+/* Reduce decorative intensity in Light; Dark keeps luminous effects. */
+html[data-beam-theme="light"] .beam-floorplan-shell { background:linear-gradient(180deg,#fbfdff,#f7fafc); }
+html[data-beam-theme="light"] .beam-command-center { background:#f3f6fa!important; }
+html[data-beam-theme="light"] .beam-command-center .shadow-xl,
+html[data-beam-theme="light"] .beam-command-center .shadow-2xl { box-shadow:var(--beam-shadow)!important; }
+
+/* v8.2 OpenStudio result calibration visuals */
+:root, html[data-beam-theme="light"] { --beam-tooltip-bg:#ffffff; }
+html[data-beam-theme="dark"] { --beam-tooltip-bg:#020617; }

@@ -1,0 +1,16 @@
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 beam-backend/test_transport_contract.py
+PASS transport contract: 27 WebSocket commands validated
+
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tools/smoke_v11.py
+PASS v11 integration: 21 HTTP commands; room/resources/schedule, engineering, source-specific six-resolution energy/ROI, gateway receipt, HTTP+WS role redaction and restart
+
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tools/smoke_release.py
+PASS release smoke: launcher, static assets, login, HTTP idempotency, observed energy/CSV, live backup and restart persistence
+
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tools/smoke_demo.py
+PASS English demo: launcher, same-origin presenter login, populated room/models/traits/equipment/ROI, 8 HTTP commands, editable computed prediction, scheduling, virtual BMS, six energy resolutions, isolation and restart without duplicate history
+
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tools/check_setup.py
+BEAM v11.1 dependencies, bundled UI and original source data: OK
+Baseline: FULL_ANNUAL_TABULAR | Hourly trace: False
+Start the English demo with START_BEAM.bat or python RUN_BEAM.py --demo. Node.js is needed only for rebuilding.

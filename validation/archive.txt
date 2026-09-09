@@ -1,0 +1,6 @@
+PASS ZIP: CRC, safe paths, 139 unique files, complete source/static equality, no runtime databases/keys/dependency folders
+PASS bundled static assets exactly match the final TypeScript/Vite build
+PASS all 7 original OpenStudio/floorplan/capability/baseline data files preserved byte-for-byte
+PASS all three demo model specifications and three synthetic benchmark datasets included
+PASS English demo: launcher, same-origin presenter login, populated room/models/traits/equipment/ROI, 8 HTTP commands, editable computed prediction, scheduling, virtual BMS, six energy resolutions, isolation and restart without duplicate history
+PASS extracted release launches, computes, schedules and restores its English demo without node_modules or the working source tree

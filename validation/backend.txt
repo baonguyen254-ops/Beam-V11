@@ -1,0 +1,18 @@
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -m pytest -q beam-backend
+........................................................................ [ 67%]
+..................................                                       [100%]
+=============================== warnings summary ===============================
+beam-backend/test_v10.py::test_api_setup_auth_csrf_and_roles
+  /workspace/scratch/eb50e042dedd/beam-deps/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+beam-backend/test_v10.py::test_api_setup_auth_csrf_and_roles
+  /workspace/scratch/eb50e042dedd/beam-deps/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+106 passed, 2 warnings in 33.92s
+
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 beam-backend/test_frontend_contract.py
+PASS static frontend/backend contract: 17 UI action families covered
+PASS v9 visualization/calibration contract: hard boundaries, fullscreen command center, modal portal, heatmaps, trends, alarms and controls

@@ -1,0 +1,9 @@
+[
+  {
+    "record_id": "DEIDENTIFIED_HOLDOUT_ID",
+    "features": {
+      "age_years": 40
+    },
+    "success": true
+  }
+]

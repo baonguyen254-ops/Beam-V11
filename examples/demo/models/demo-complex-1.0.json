@@ -1,0 +1,88 @@
+{
+  "id": "demo-complex-1.0",
+  "name": "Complex surgery \u00b7 Synthetic demo",
+  "version": "1.0-demo",
+  "type": "LOGISTIC_V1",
+  "endpoint": "NO_MAJOR_COMPLICATION_30D",
+  "simulation_only": true,
+  "source": "BEAM artificial teaching coefficients. These are not fitted or validated on patients.",
+  "intended_population": "Fictional adult demonstration cases only; never clinical decision-making.",
+  "specialties": [
+    "CARDIAC",
+    "VASCULAR",
+    "NEUROSURGERY",
+    "TRAUMA"
+  ],
+  "procedures": [
+    "Coronary Artery Bypass Graft",
+    "Valve Replacement",
+    "Cardiac Re-exploration",
+    "Peripheral Vascular Bypass",
+    "Carotid Endarterectomy",
+    "Craniotomy",
+    "Spinal Decompression",
+    "Emergency Hematoma Evacuation",
+    "Trauma Damage-Control Surgery",
+    "Emergency Hemorrhage Control",
+    "Polytrauma Operative Stabilization"
+  ],
+  "intercept": 1.75,
+  "features": {
+    "age_years": {
+      "min": 18,
+      "max": 100,
+      "center": 50,
+      "scale": 1,
+      "coefficient": -0.035
+    },
+    "asa_class": {
+      "min": 1,
+      "max": 5,
+      "center": 2,
+      "scale": 1,
+      "coefficient": -0.72
+    },
+    "emergency": {
+      "min": 0,
+      "max": 1,
+      "center": 0,
+      "scale": 1,
+      "coefficient": -0.6
+    },
+    "bmi": {
+      "min": 16,
+      "max": 45,
+      "center": 25,
+      "scale": 1,
+      "coefficient": -0.035
+    },
+    "hemoglobin_g_dl": {
+      "min": 7,
+      "max": 18,
+      "center": 12,
+      "scale": 1,
+      "coefficient": 0.18
+    },
+    "albumin_g_dl": {
+      "min": 2,
+      "max": 5.5,
+      "center": 3.8,
+      "scale": 1,
+      "coefficient": 0.35
+    },
+    "creatinine_mg_dl": {
+      "min": 0.3,
+      "max": 4,
+      "center": 1,
+      "scale": 1,
+      "coefficient": -0.25
+    }
+  },
+  "acceptance": {
+    "min_cases": 100,
+    "min_each_outcome": 10,
+    "min_auc": 0.65,
+    "max_brier": 0.25,
+    "max_ece": 0.1
+  }
+}

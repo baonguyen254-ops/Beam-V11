@@ -1,0 +1,10 @@
+{
+  "Operating Room 1": ["GENERAL", "CARDIAC", "VASCULAR"],
+  "Operating Room 2": ["GENERAL", "GASTROINTESTINAL", "UROLOGY"],
+  "Operating Room 3": ["ORTHOPEDICS", "TRAUMA", "NEUROSURGERY"],
+  "Operating Room 4": ["ENT", "UROLOGY", "MINOR"],
+  "Operating Room 5": ["CARDIAC", "TRAUMA", "NEUROSURGERY", "GENERAL"],
+  "Operating Room 6": ["MINOR", "ENDOSCOPY", "ENT"],
+  "Operating Room 7": ["ORTHOPEDICS", "GENERAL", "GYNECOLOGY"],
+  "Operating Room 8": ["GENERAL", "GYNECOLOGY", "ENT"]
+}

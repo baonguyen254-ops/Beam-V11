@@ -1,0 +1,1 @@
+PASS English demo: launcher, same-origin presenter login, populated room/models/traits/equipment/ROI, 8 HTTP commands, editable computed prediction, scheduling, virtual BMS, six energy resolutions, isolation and restart without duplicate history

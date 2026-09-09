@@ -1,0 +1,120 @@
+{
+  "beam_url": "http://127.0.0.1:8000",
+  "plc": {
+    "host": "127.0.0.1",
+    "port": 502,
+    "unit_id": 1,
+    "timeout_seconds": 2
+  },
+  "poll_seconds": 5,
+  "facility": {
+    "power_kw": {
+      "address": null,
+      "register": "holding",
+      "type": "float32",
+      "word_order": "big",
+      "byte_order": "big",
+      "scale": 1,
+      "offset": 0
+    },
+    "delta_p_pa": {
+      "address": null,
+      "register": "holding",
+      "type": "float32",
+      "word_order": "big",
+      "byte_order": "big",
+      "scale": 1,
+      "offset": 0
+    }
+  },
+  "rooms": [
+    {
+      "room_id": "REPLACE_BEAM_ROOM_ID",
+      "commissioned": false,
+      "commissioning_reference": "",
+      "write_enable": {
+        "address": null,
+        "register": "holding",
+        "type": "uint16",
+        "word_order": "big",
+        "byte_order": "big",
+        "scale": 1,
+        "offset": 0
+      },
+      "telemetry": {
+        "power_kw": {
+          "address": null,
+          "register": "holding",
+          "type": "float32",
+          "word_order": "big",
+          "byte_order": "big",
+          "scale": 1,
+          "offset": 0
+        },
+        "temp_c": {
+          "address": null,
+          "register": "holding",
+          "type": "float32",
+          "word_order": "big",
+          "byte_order": "big",
+          "scale": 1,
+          "offset": 0
+        },
+        "humidity": {
+          "address": null,
+          "register": "holding",
+          "type": "float32",
+          "word_order": "big",
+          "byte_order": "big",
+          "scale": 1,
+          "offset": 0
+        },
+        "airflow_m3h": {
+          "address": null,
+          "register": "holding",
+          "type": "float32",
+          "word_order": "big",
+          "byte_order": "big",
+          "scale": 1,
+          "offset": 0
+        }
+      },
+      "targets": {
+        "target_temp_c": {
+          "address": null,
+          "register": "holding",
+          "type": "float32",
+          "word_order": "big",
+          "byte_order": "big",
+          "scale": 1,
+          "offset": 0,
+          "min": null,
+          "max": null
+        },
+        "target_humidity": {
+          "address": null,
+          "register": "holding",
+          "type": "float32",
+          "word_order": "big",
+          "byte_order": "big",
+          "scale": 1,
+          "offset": 0,
+          "min": null,
+          "max": null
+        },
+        "target_airflow_m3h": {
+          "address": null,
+          "register": "holding",
+          "type": "float32",
+          "word_order": "big",
+          "byte_order": "big",
+          "scale": 1,
+          "offset": 0,
+          "min": null,
+          "max": null
+        }
+      }
+    }
+  ],
+  "device_hours": []
+}

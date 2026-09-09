@@ -1,0 +1,33 @@
+{
+  "id": "REPLACE_MODEL_VERSION_ID",
+  "name": "REPLACE_MODEL_NAME",
+  "version": "1",
+  "type": "LOGISTIC_V1",
+  "endpoint": "NO_MAJOR_COMPLICATION_30D",
+  "simulation_only": true,
+  "specialties": [
+    "GENERAL"
+  ],
+  "procedures": [
+    "REPLACE_EXACT_PROCEDURE"
+  ],
+  "source": "REPLACE_PUBLISHED_OR_LOCAL_MODEL_PROVENANCE",
+  "intended_population": "REPLACE_INTENDED_POPULATION",
+  "intercept": null,
+  "features": {
+    "age_years": {
+      "min": 18,
+      "max": 90,
+      "center": 50,
+      "scale": 1,
+      "coefficient": null
+    }
+  },
+  "acceptance": {
+    "min_cases": 100,
+    "min_each_outcome": 10,
+    "min_auc": 0.65,
+    "max_brier": 0.25,
+    "max_ece": 0.1
+  }
+}
